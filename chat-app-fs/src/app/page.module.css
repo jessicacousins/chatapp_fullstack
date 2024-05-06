@@ -1,0 +1,71 @@
+.form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input,
+.button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.input {
+  flex-grow: 1;
+}
+
+.button {
+  background-color: #0070f3;
+  color: white;
+  cursor: pointer;
+}
+
+.ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.li {
+  margin-bottom: 10px;
+}
+
+.chatDisplay {
+  list-style-type: none;
+  padding: 0;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.userList {
+  margin-top: 10px;
+}
+
+.activity {
+  color: red;
+  margin-top: 10px;
+}
+
+/* styles/page.module.css */
+.chatDisplay {
+  list-style: none;
+  padding: 0;
+  overflow-y: auto;
+  height: 300px; /* Set a fixed height */
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+.messageItem {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.messageAuthor {
+  font-weight: bold;
+}
+
+.messageText {
+  margin-left: 10px;
+}
