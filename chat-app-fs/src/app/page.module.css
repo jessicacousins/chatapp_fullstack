@@ -1,24 +1,77 @@
+.welcome {
+  font-size: 2rem;
+  color: #005500;
+  padding: 10px;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
 .form {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-.input,
-.button {
+.input1,
+.input2,
+.input3,
+.button,
+.button2 {
   padding: 10px;
   border-radius: 5px;
   border: none;
+  font-size: 1rem;
 }
 
-.input {
+.input1 {
   flex-grow: 1;
+  background-color: #fff9cc;
+  color: #005500;
+  font-weight: 600;
 }
 
-.button {
-  background-color: #0070f3;
+.input2 {
+  flex-grow: 1;
+  background-color: #fff9cc;
+  color: #005500;
+  font-weight: 600;
+}
+
+.input3 {
+  flex-grow: 1;
+  background-color: #ccffcc;
+  color: #005500;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  resize: vertical;
+  min-height: 50px;
+}
+
+.button,
+.button2 {
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #0071f3d9;
   color: white;
   cursor: pointer;
+  width: 120px;
+  height: 50px;
+}
+
+.button:hover {
+  background-color: #043c7cf0;
+}
+
+.button2 {
+  background-color: #058f07dd;
+}
+
+.button2:hover {
+  background-color: #005202dd;
 }
 
 .ul {
@@ -30,13 +83,6 @@
   margin-bottom: 10px;
 }
 
-.chatDisplay {
-  list-style-type: none;
-  padding: 0;
-  overflow-y: auto;
-  max-height: 300px;
-}
-
 .userList {
   margin-top: 10px;
 }
@@ -46,15 +92,16 @@
   margin-top: 10px;
 }
 
-/* styles/page.module.css */
 .chatDisplay {
   list-style: none;
   padding: 0;
   overflow-y: auto;
-  height: 300px; /* Set a fixed height */
+  height: 300px;
   background: #f0f0f0;
   border: 1px solid #ccc;
   margin-top: 10px;
+  max-height: 300px;
+  border-radius: 5px;
 }
 
 .messageItem {

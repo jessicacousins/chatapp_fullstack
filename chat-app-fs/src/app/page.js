@@ -54,20 +54,25 @@ export default function Page() {
 
   return (
     <main>
+      <div className={styles.welcome}>Welcome</div>
       <form className={styles.form} onSubmit={joinRoom}>
         <input
+          className={styles.input1}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Your Name"
+          placeholder="Enter User Name..."
           required
         />
         <input
+          className={styles.input2}
           value={room}
           onChange={(e) => setRoom(e.target.value)}
-          placeholder="Chat Room"
+          placeholder="Enter Chat Room..."
           required
         />
-        <button type="submit">Join</button>
+        <button className={styles.button} type="submit">
+          Join
+        </button>
       </form>
       <ul className={styles.chatDisplay}>
         {messages.map((m, index) => (
@@ -86,13 +91,18 @@ export default function Page() {
       </div>
       <p className={styles.activity}>{activity}</p>
       <form className={styles.form} onSubmit={sendMessage}>
-        <input
+        <textarea
+          className={styles.input3}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Your message"
           required
+          rows="3"
+          wrap="soft"
         />
-        <button type="submit">Send</button>
+        <button className={styles.button2} type="submit">
+          Send
+        </button>
       </form>
     </main>
   );
