@@ -12,6 +12,7 @@ export default function Page() {
   const [messages, setMessages] = useState([]);
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [activity, setActivity] = useState("");
+  const [showUsers, setShowUsers] = useState(false);
 
   useEffect(() => {
     socket = io("ws://localhost:3500");
@@ -52,6 +53,10 @@ export default function Page() {
     }
   };
 
+  const toggleUsersDisplay = () => {
+    setShowUsers(!showUsers);
+  };
+
   return (
     <main>
       <div className={styles.welcome}>Welcome</div>
@@ -81,21 +86,26 @@ export default function Page() {
           </li>
         ))}
       </ul>
-      <div className={styles.userList}>
-        <strong>Users in Room:</strong>
-        {usersInRoom.map((user, index) => (
-          <span key={index} style={{ color: user.color }}>
-            {user.name}
-          </span>
-        ))}
-      </div>
+      <button className={styles.toggleButton} onClick={toggleUsersDisplay}>
+        {showUsers ? "Hide Users" : "Show Users"}
+      </button>
+      {showUsers && (
+        <div className={styles.userList}>
+          <strong>Users in Room:</strong>
+          {usersInRoom.map((user, index) => (
+            <span key={index} style={{ color: user.color }}>
+              {user.name}
+            </span>
+          ))}
+        </div>
+      )}
       <p className={styles.activity}>{activity}</p>
       <form className={styles.form} onSubmit={sendMessage}>
         <textarea
           className={styles.input3}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Your message"
+          placeholder="Your message here"
           required
           rows="3"
           wrap="soft"
