@@ -1,11 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import { useAuth } from "./useAuth";
+import Login from "./login.js";
+import Signup from "./signup.js";
 import styles from "./page.module.css";
 
 let socket;
 
 export default function Page() {
+  const { currentUser, logout, loading } = useAuth();
+  const [showSignup, setShowSignup] = useState(false);
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
@@ -15,32 +20,29 @@ export default function Page() {
   const [showUsers, setShowUsers] = useState(false);
 
   useEffect(() => {
-    socket = io("ws://localhost:3500");
+    if (currentUser) {
+      socket = io("ws://localhost:3500");
+      socket.on("message", (message) =>
+        setMessages((msgs) => [...msgs, message])
+      );
+      socket.on("userList", (data) => setUsersInRoom(data.users));
+      socket.on("activity", (data) => {
+        setActivity(`${data.name} is typing...`);
+        setTimeout(() => setActivity(""), 3000);
+      });
 
-    socket.on("message", (message) => {
-      setMessages((msgs) => [...msgs, message]);
-    });
-
-    socket.on("userList", (data) => {
-      setUsersInRoom(data.users);
-    });
-
-    socket.on("activity", (data) => {
-      setActivity(`${data.name} is typing...`);
-      setTimeout(() => setActivity(""), 3000);
-    });
-
-    return () => {
-      socket.off("message");
-      socket.off("userList");
-      socket.off("activity");
-      socket.disconnect();
-    };
-  }, []);
+      return () => {
+        socket.off("message");
+        socket.off("userList");
+        socket.off("activity");
+        socket.disconnect();
+      };
+    }
+  }, [currentUser]);
 
   const sendMessage = (event) => {
     event.preventDefault();
-    if (message) {
+    if (message && currentUser) {
       socket.emit("sendMessage", { name, message, room });
       setMessage("");
     }
@@ -48,18 +50,31 @@ export default function Page() {
 
   const joinRoom = (event) => {
     event.preventDefault();
-    if (name && room) {
+    if (name && room && currentUser) {
       socket.emit("joinRoom", { name, room });
     }
   };
 
-  const toggleUsersDisplay = () => {
-    setShowUsers(!showUsers);
-  };
+  const toggleUsersDisplay = () => setShowUsers(!showUsers);
+
+  if (loading) return <div>Loading...</div>;
+
+  if (!currentUser) {
+    return (
+      <main>
+        {showSignup ? <Signup /> : <Login />}
+        <button onClick={() => setShowSignup(!showSignup)}>
+          {showSignup
+            ? "Have an account? Log in"
+            : "Don't have an account? Sign up"}
+        </button>
+      </main>
+    );
+  }
 
   return (
     <main>
-      <div className={styles.welcome}>Welcome</div>
+      <div className={styles.welcome}>Welcome to the Chatroom!</div>
       <form className={styles.form} onSubmit={joinRoom}>
         <input
           className={styles.input1}
@@ -114,6 +129,9 @@ export default function Page() {
           Send
         </button>
       </form>
+      <button className={styles.button} onClick={logout}>
+        Logout
+      </button>
     </main>
   );
 }
