@@ -63,7 +63,7 @@ export default function Page() {
     return (
       <main>
         {showSignup ? <Signup /> : <Login />}
-        <button onClick={() => setShowSignup(!showSignup)}>
+        <button className={styles.slBtn} onClick={() => setShowSignup(!showSignup)}>
           {showSignup
             ? "Have an account? Log in"
             : "Don't have an account? Sign up"}

@@ -8,6 +8,7 @@ import {
 import { auth } from "./firebaseConfig";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
+import styles from "./loginsignup.module.css";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -48,10 +49,11 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSignup}>
+    <div className={styles.container}>
+      <form className={styles.form} onSubmit={handleSignup}>
         <input
           type="email"
+          className={styles.input}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
@@ -59,18 +61,21 @@ export default function Signup() {
         />
         <input
           type="password"
+          className={styles.input}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit" className={styles.button}>
+          Sign Up
+        </button>
       </form>
-      <button onClick={handleGoogleSignIn}>
-        <FcGoogle /> Sign in with Google
+      <button onClick={handleGoogleSignIn} className={styles.socialButton}>
+        <FcGoogle className={styles.icon} /> Sign in with Google
       </button>
-      <button onClick={handleAppleSignIn}>
-        <FaApple />
+      <button onClick={handleAppleSignIn} className={styles.socialButton}>
+        <FaApple className={styles.icon} />
         Sign in with Apple
       </button>
     </div>
