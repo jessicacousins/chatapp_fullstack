@@ -1,6 +1,6 @@
 .welcome {
   font-size: 2rem;
-  color: #005500;
+  color: #58a6ff;
   padding: 10px;
   margin-bottom: 30px;
   font-weight: 600;
@@ -10,68 +10,65 @@
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+  color: #ffffff;
 }
 
 .input1,
 .input2,
-.input3,
-.button,
-.button2 {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  font-size: 1rem;
-}
-
-.input1 {
-  flex-grow: 1;
-  background-color: #fff9cc;
-  color: #005500;
-  font-weight: 600;
-}
-
-.input2 {
-  flex-grow: 1;
-  background-color: #fff9cc;
-  color: #005500;
-  font-weight: 600;
-}
-
 .input3 {
-  flex-grow: 1;
-  background-color: #ccffcc;
-  color: #005500;
-  font-weight: 600;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  resize: vertical;
-  min-height: 50px;
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #555;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .button,
 .button2 {
-  font-size: 1.2rem;
+  background-color: #1da1f2;
+  color: #ffffff;
+  border: none;
   padding: 10px;
   border-radius: 5px;
-  border: none;
-  background-color: #0071f3d9;
-  color: white;
-  cursor: pointer;
-  width: 120px;
-  height: 50px;
+  transition: background-color 0.3s;
 }
 
-.button:hover {
-  background-color: #043c7cf0;
-}
-
-.button2 {
-  background-color: #058f07dd;
-}
-
+.button:hover,
 .button2:hover {
-  background-color: #005202dd;
+  background-color: #1991da;
+}
+
+.chatDisplay {
+  list-style: none;
+  padding: 0;
+  overflow-y: auto;
+  height: 300px;
+  background: #222222;
+  border: 1px solid #333333;
+  border-radius: 5px;
+}
+
+.messageItem {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
+
+.userList {
+  background-color: #222222;
+  border: 1px solid #333333;
+  color: #ffffff;
+}
+
+.activity {
+  color: #ff4757;
+}
+
+.toggleButton {
+  background-color: #5865f2;
+}
+
+.toggleButton:hover {
+  background-color: #4e5bd4;
 }
 
 .ul {
@@ -147,19 +144,17 @@
 }
 
 .slBtn {
-  color: #000;
-  background-color: #a5fba596;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-}
-.slBtn:hover {
-  background-color: #1c721c;
+  display: block;
+  margin: 10px auto;
   color: #fff;
+  background-color: #333;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  text-align: center;
+  width: auto;
+}
+
+.slBtn:hover {
+  background-color: #555;
 }
