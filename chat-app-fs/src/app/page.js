@@ -2,15 +2,14 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useAuth } from "./useAuth";
-import Login from "./login.js";
-import Signup from "./signup.js";
+import Login from "./login";
+import Signup from "./signup";
 import styles from "./page.module.css";
 
 let socket;
 
 export default function Page() {
   const { currentUser, logout, loading } = useAuth();
-  const [showSignup, setShowSignup] = useState(false);
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
@@ -18,6 +17,11 @@ export default function Page() {
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [activity, setActivity] = useState("");
   const [showUsers, setShowUsers] = useState(false);
+  const [activeTab, setActiveTab] = useState("login");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   useEffect(() => {
     if (currentUser) {
@@ -61,22 +65,34 @@ export default function Page() {
 
   if (!currentUser) {
     return (
-      <main>
-        {showSignup ? <Signup /> : <Login />}
-        <button
-          className={styles.slBtn}
-          onClick={() => setShowSignup(!showSignup)}
-        >
-          {showSignup
-            ? "Have an account? Log in"
-            : "Don't have an account? Sign up"}
-        </button>
-      </main>
+      <div className={styles.container}>
+        <div className={styles.tabs}>
+          <button
+            className={`${styles.tab} ${
+              activeTab === "login" ? styles.active : ""
+            }`}
+            onClick={() => handleTabClick("login")}
+          >
+            Login
+          </button>
+          <button
+            className={`${styles.tab} ${
+              activeTab === "signup" ? styles.active : ""
+            }`}
+            onClick={() => handleTabClick("signup")}
+          >
+            Signup
+          </button>
+        </div>
+        <div className={styles["form-container"]}>
+          {activeTab === "login" ? <Login /> : <Signup />}
+        </div>
+      </div>
     );
   }
 
   return (
-    <main>
+    <div className={styles.container}>
       <div className={styles.welcome}>Welcome to the Chatroom!</div>
       <form className={styles.form} onSubmit={joinRoom}>
         <input
@@ -99,7 +115,11 @@ export default function Page() {
       </form>
       <ul className={styles.chatDisplay}>
         {messages.map((m, index) => (
-          <li key={index} style={{ color: m.color }}>
+          <li
+            key={index}
+            className={styles.messageItem}
+            style={{ color: m.color }}
+          >
             {m.name}: {m.text}
           </li>
         ))}
@@ -135,6 +155,6 @@ export default function Page() {
       <button className={styles.button} onClick={logout}>
         Logout
       </button>
-    </main>
+    </div>
   );
 }

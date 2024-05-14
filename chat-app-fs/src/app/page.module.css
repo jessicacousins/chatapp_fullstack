@@ -1,3 +1,90 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f2f5;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+.tab.active {
+  background-color: #1da1f2;
+  color: white;
+}
+
+.form-container {
+  background: white;
+  padding: 40px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.button {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #0d8cd9;
+}
+
+.socialButton {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.socialButton:hover {
+  background-color: #f0f2f5;
+}
+
+.icon {
+  margin-right: 8px;
+}
+
 .welcome {
   font-size: 2rem;
   color: #58a6ff;
@@ -31,6 +118,7 @@
   padding: 10px;
   border-radius: 5px;
   transition: background-color 0.3s;
+  width: auto;
 }
 
 .button:hover,
@@ -46,6 +134,7 @@
   background: #222222;
   border: 1px solid #333333;
   border-radius: 5px;
+  width: 80%;
 }
 
 .messageItem {
@@ -99,23 +188,6 @@
 .activity {
   color: red;
   margin-top: 10px;
-}
-
-.chatDisplay {
-  list-style: none;
-  padding: 0;
-  overflow-y: auto;
-  height: 300px;
-  background: #f0f0f0;
-  border: 1px solid #ccc;
-  margin-top: 10px;
-  max-height: 300px;
-  border-radius: 5px;
-}
-
-.messageItem {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
 }
 
 .messageAuthor {

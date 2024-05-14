@@ -33,6 +33,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .button:hover {
@@ -45,14 +46,14 @@
   justify-content: center;
   margin-top: 10px;
   padding: 10px;
-  /* background: #fff; */
+  background: white;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .socialButton:hover {
-  background: #cf5c5c;
+  background-color: #f0f2f5;
 }
 
 .icon {

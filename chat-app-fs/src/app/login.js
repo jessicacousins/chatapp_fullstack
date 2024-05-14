@@ -4,7 +4,7 @@ import { useAuth } from "./useAuth";
 import { auth } from "./firebaseConfig";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import styles from "./loginsignup.module.css";
+import styles from "./page.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -21,7 +21,7 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles["form-container"]}>
       <form className={styles.form} onSubmit={handleLogin}>
         <input
           type="email"
@@ -47,8 +47,7 @@ export default function Login() {
         <FcGoogle className={styles.icon} /> Sign in with Google
       </button>
       <button onClick={loginWithApple} className={styles.socialButton}>
-        <FaApple className={styles.icon} />
-        Sign in with Apple
+        <FaApple className={styles.icon} /> Sign in with Apple
       </button>
     </div>
   );
