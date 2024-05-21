@@ -26,3 +26,4 @@
 - `npx create-next-app@latest chat-app-fs`
 - `npm install firebase`
 - `npm install react-icons`
+- `npm install axios`

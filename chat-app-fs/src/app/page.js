@@ -4,6 +4,8 @@ import io from "socket.io-client";
 import { useAuth } from "./useAuth";
 import Login from "./login";
 import Signup from "./signup";
+import Home from "./Home";
+import Profile from "./Profile";
 import styles from "./page.module.css";
 
 let socket;
@@ -18,6 +20,10 @@ export default function Page() {
   const [activity, setActivity] = useState("");
   const [showUsers, setShowUsers] = useState(false);
   const [activeTab, setActiveTab] = useState("login");
+  const [inRoom, setInRoom] = useState(false);
+  const [tabs, setTabs] = useState([]);
+  const [currentTab, setCurrentTab] = useState(null);
+  const [view, setView] = useState("home");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -25,7 +31,7 @@ export default function Page() {
 
   useEffect(() => {
     if (currentUser) {
-      socket = io("ws://localhost:3500");
+      socket = io("http://localhost:3500");
       socket.on("message", (message) =>
         setMessages((msgs) => [...msgs, message])
       );
@@ -47,19 +53,50 @@ export default function Page() {
   const sendMessage = (event) => {
     event.preventDefault();
     if (message && currentUser) {
-      socket.emit("sendMessage", { name, message, room });
+      socket.emit("sendMessage", { name, message, room: currentTab });
       setMessage("");
     }
   };
 
-  const joinRoom = (event) => {
-    event.preventDefault();
-    if (name && room && currentUser) {
-      socket.emit("joinRoom", { name, room });
+  const joinRoom = (username, chatroom) => {
+    if (username && chatroom && currentUser) {
+      setName(username);
+      setRoom(chatroom);
+      socket.emit("joinRoom", { name: username, room: chatroom });
+      setInRoom(true);
+      if (!tabs.includes(chatroom)) {
+        setTabs([...tabs, chatroom]);
+        setCurrentTab(chatroom);
+      }
     }
   };
 
+  const switchTab = (room) => {
+    setCurrentTab(room);
+    socket.emit("joinRoom", { name, room });
+  };
+
+  const closeTab = (room) => {
+    setTabs(tabs.filter((tab) => tab !== room));
+    if (currentTab === room && tabs.length > 1) {
+      setCurrentTab(tabs.find((tab) => tab !== room));
+    } else if (tabs.length === 1) {
+      setCurrentTab(null);
+      setInRoom(false);
+    }
+  };
+
+  const leaveChatroom = () => {
+    setInRoom(false);
+    setCurrentTab(null);
+    socket.emit("leaveRoom", { name, room });
+  };
+
   const toggleUsersDisplay = () => setShowUsers(!showUsers);
+
+  const navigateToProfile = () => {
+    setView("profile");
+  };
 
   if (loading) return <div>Loading...</div>;
 
@@ -91,70 +128,82 @@ export default function Page() {
     );
   }
 
+  if (view === "profile") {
+    return <Profile />;
+  }
+
+  if (!inRoom) {
+    return <Home onJoinRoom={joinRoom} />;
+  }
+
   return (
     <div className={styles.container}>
-      <div className={styles.welcome}>Welcome to the Chatroom!</div>
-      <form className={styles.form} onSubmit={joinRoom}>
-        <input
-          className={styles.input1}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter User Name..."
-          required
-        />
-        <input
-          className={styles.input2}
-          value={room}
-          onChange={(e) => setRoom(e.target.value)}
-          placeholder="Enter Chat Room..."
-          required
-        />
-        <button className={styles.button} type="submit">
-          Join
-        </button>
-      </form>
-      <ul className={styles.chatDisplay}>
-        {messages.map((m, index) => (
-          <li
+      <div className={styles.tabsContainer}>
+        {tabs.map((tab, index) => (
+          <div
             key={index}
-            className={styles.messageItem}
-            style={{ color: m.color }}
+            className={`${styles.tab} ${
+              currentTab === tab ? styles.activeTab : ""
+            }`}
           >
-            {m.name}: {m.text}
-          </li>
+            <span onClick={() => switchTab(tab)}>{tab}</span>
+            <button onClick={() => closeTab(tab)}>x</button>
+          </div>
         ))}
-      </ul>
-      <button className={styles.toggleButton} onClick={toggleUsersDisplay}>
-        {showUsers ? "Hide Users" : "Show Users"}
-      </button>
-      {showUsers && (
-        <div className={styles.userList}>
-          <strong>Users in Room:</strong>
-          {usersInRoom.map((user, index) => (
-            <span key={index} style={{ color: user.color }}>
-              {user.name}
-            </span>
-          ))}
+      </div>
+      <div className={styles.chatroomContainer}>
+        <div className={styles.welcome}>
+          Welcome to the {currentTab} Chatroom!
         </div>
-      )}
-      <p className={styles.activity}>{activity}</p>
-      <form className={styles.form} onSubmit={sendMessage}>
-        <textarea
-          className={styles.input3}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Your message here"
-          required
-          rows="3"
-          wrap="soft"
-        />
-        <button className={styles.button2} type="submit">
-          Send
+        <ul className={styles.chatDisplay}>
+          {messages.map((m, index) => (
+            <li
+              key={index}
+              className={styles.messageItem}
+              style={{ color: m.color }}
+            >
+              {m.name}: {m.text}
+            </li>
+          ))}
+        </ul>
+        <button className={styles.toggleButton} onClick={toggleUsersDisplay}>
+          {showUsers ? "Hide Users" : "Show Users"}
         </button>
-      </form>
-      <button className={styles.button} onClick={logout}>
-        Logout
-      </button>
+        {showUsers && (
+          <div className={styles.userList}>
+            <strong>Users in Room:</strong>
+            {usersInRoom.map((user, index) => (
+              <span key={index} style={{ color: user.color }}>
+                {user.name}
+              </span>
+            ))}
+          </div>
+        )}
+        <p className={styles.activity}>{activity}</p>
+        <form className={styles.form} onSubmit={sendMessage}>
+          <textarea
+            className={styles.input3}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Your message here"
+            required
+            rows="3"
+            wrap="soft"
+          />
+          <button className={styles.button2} type="submit">
+            Send
+          </button>
+        </form>
+        <button className={styles.button} onClick={logout}>
+          Logout
+        </button>
+        <button className={styles.button} onClick={leaveChatroom}>
+          Leave Chatroom
+        </button>
+        <button className={styles.button} onClick={navigateToProfile}>
+          Profile
+        </button>
+      </div>
     </div>
   );
 }
