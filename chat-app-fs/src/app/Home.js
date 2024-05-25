@@ -69,8 +69,8 @@ const Home = ({ onJoinRoom }) => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.welcome}>Join or Create a Chatroom</h1>
       <div className={styles.formContainer}>
+        <h1 className={styles.welcome}>Join or Create a Chatroom</h1>
         <input
           type="text"
           className={styles.input}
@@ -95,15 +95,16 @@ const Home = ({ onJoinRoom }) => {
         <button className={styles.button} onClick={() => setView("profile")}>
           Edit Profile
         </button>
+
+        <ul className={styles.chatList}>
+          {chatrooms.map((room, index) => (
+            <li key={index} className={styles.chatItem}>
+              <span>{room}</span>
+              <button onClick={() => handleJoinRoomFromList(room)}>Join</button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className={styles.chatList}>
-        {chatrooms.map((room, index) => (
-          <li key={index} className={styles.chatItem}>
-            <span>{room}</span>
-            <button onClick={() => handleJoinRoomFromList(room)}>Join</button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };

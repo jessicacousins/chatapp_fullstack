@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./useAuth";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 const Profile = () => {
   const { currentUser } = useAuth();
-  const router = useRouter(); 
+  const router = useRouter();
   const [profile, setProfile] = useState({
     firstName: "",
     lastName: "",
