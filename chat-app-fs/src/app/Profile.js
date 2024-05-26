@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./useAuth";
-import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
-const Profile = () => {
+const Profile = ({ onBackToHome }) => {
   const { currentUser } = useAuth();
-  const router = useRouter();
   const [profile, setProfile] = useState({
     firstName: "",
     lastName: "",
@@ -22,11 +20,14 @@ const Profile = () => {
 
   useEffect(() => {
     if (currentUser) {
+      console.log("Fetching profile for:", currentUser.email); // Log the email
       axios
         .get(`http://localhost:3500/user-profile/${currentUser.email}`)
         .then((response) => {
           if (response.data.profile) {
             setProfile(response.data.profile);
+          } else {
+            setError("Profile not found");
           }
           setLoading(false);
         })
@@ -64,10 +65,6 @@ const Profile = () => {
     }
   };
 
-  const handleBackToChatrooms = () => {
-    router.push("/");
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -82,7 +79,6 @@ const Profile = () => {
       <form className={styles.profileForm} onSubmit={handleSubmit}>
         <div className={styles.profileField}>
           <label className={styles.label}>First Name:</label>
-          <span className={styles.profileText}>{profile.firstName}</span>
           <input
             type="text"
             name="firstName"
@@ -95,7 +91,6 @@ const Profile = () => {
         </div>
         <div className={styles.profileField}>
           <label className={styles.label}>Last Name:</label>
-          <span className={styles.profileText}>{profile.lastName}</span>
           <input
             type="text"
             name="lastName"
@@ -108,7 +103,6 @@ const Profile = () => {
         </div>
         <div className={styles.profileField}>
           <label className={styles.label}>Phone Number:</label>
-          <span className={styles.profileText}>{profile.phoneNumber}</span>
           <input
             type="tel"
             name="phoneNumber"
@@ -121,7 +115,6 @@ const Profile = () => {
         </div>
         <div className={styles.profileField}>
           <label className={styles.label}>Address:</label>
-          <span className={styles.profileText}>{profile.address}</span>
           <input
             type="text"
             name="address"
@@ -134,7 +127,6 @@ const Profile = () => {
         </div>
         <div className={styles.profileField}>
           <label className={styles.label}>Email:</label>
-          <span className={styles.profileText}>{profile.email}</span>
           <input
             type="email"
             name="email"
@@ -169,15 +161,6 @@ const Profile = () => {
         </div>
         <div className={styles.profileField}>
           <label className={styles.label}>Profile Picture URL:</label>
-          <span className={styles.profileText}>
-            {profile.profilePicture && (
-              <img
-                src={profile.profilePicture}
-                alt="Profile"
-                className={styles.profileImage}
-              />
-            )}
-          </span>
           <input
             type="url"
             name="profilePicture"
@@ -194,12 +177,8 @@ const Profile = () => {
           Update Profile
         </button>
       </form>
-      <button
-        type="button"
-        className={styles.button}
-        onClick={handleBackToChatrooms}
-      >
-        Back to Chatrooms
+      <button type="button" className={styles.button} onClick={onBackToHome}>
+        Back to Home
       </button>
     </div>
   );

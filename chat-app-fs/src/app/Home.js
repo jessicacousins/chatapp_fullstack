@@ -18,6 +18,10 @@ const Home = ({ onJoinRoom }) => {
   const [view, setView] = useState("chatrooms");
 
   useEffect(() => {
+    if (currentUser && currentUser.email) {
+      setUsername(`@${currentUser.email.split("@")[0]}`);
+    }
+
     const fetchChatrooms = async () => {
       try {
         const response = await axios.get(
@@ -43,7 +47,7 @@ const Home = ({ onJoinRoom }) => {
     return () => {
       socket.off("chatroomsUpdate");
     };
-  }, []);
+  }, [currentUser]);
 
   const handleJoinRoom = () => {
     if (!username) {
@@ -80,6 +84,7 @@ const Home = ({ onJoinRoom }) => {
             setError("");
           }}
           placeholder="Enter your username"
+          readOnly
         />
         <input
           type="text"

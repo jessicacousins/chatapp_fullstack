@@ -98,6 +98,10 @@ export default function Page() {
     setView("profile");
   };
 
+  const navigateToHome = () => {
+    setView("home");
+  };
+
   if (loading) return <div>Loading...</div>;
 
   if (!currentUser) {
@@ -129,7 +133,7 @@ export default function Page() {
   }
 
   if (view === "profile") {
-    return <Profile />;
+    return <Profile onBackToHome={navigateToHome} />;
   }
 
   if (!inRoom) {
