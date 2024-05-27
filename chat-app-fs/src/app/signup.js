@@ -107,6 +107,7 @@ export default function Signup() {
   return (
     <div className={styles["form-container"]}>
       <form className={styles.form} onSubmit={handleSignup}>
+        <div className={styles.appName}>Swan</div>
         <input
           type="text"
           className={styles.input}

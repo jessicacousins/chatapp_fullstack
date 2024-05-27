@@ -104,9 +104,8 @@
 
 .form {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
   color: #ffffff;
+  flex-direction: column;
 }
 
 .input1,
@@ -341,4 +340,10 @@
 .success {
   color: green;
   margin-top: 1rem;
+}
+
+.appName {
+  color: blue;
+  display: flex;
+  align-items: center;
 }
