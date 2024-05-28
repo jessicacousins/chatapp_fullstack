@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import { useAuth } from "./useAuth";
 import styles from "./page.module.css";
 import Profile from "./Profile";
+import AccessibilityToolbar from "./AccessibilityToolbar";
 
 const Home = ({ onJoinRoom }) => {
   const { currentUser } = useAuth();
@@ -73,6 +74,7 @@ const Home = ({ onJoinRoom }) => {
 
   return (
     <div className={styles.container}>
+      <AccessibilityToolbar />
       <div className={styles.formContainer}>
         <h1 className={styles.welcome}>Join or Create a Chatroom</h1>
         <input

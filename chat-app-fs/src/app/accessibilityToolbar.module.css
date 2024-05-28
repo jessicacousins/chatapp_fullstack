@@ -1,0 +1,61 @@
+.accessibilityToolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.accessibilityToolbar.open {
+  display: flex;
+}
+
+.toolbarButton {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.toolbarList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toolbarList li {
+  margin-bottom: 10px;
+}
+
+.toolbarList button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  background: #f0f0f0;
+}
+
+body.grayscale,
+body.grayscale * {
+  filter: grayscale(100%) !important;
+}
+
+/* High contrast mode */
+body.high-contrast {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+body.high-contrast * {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}

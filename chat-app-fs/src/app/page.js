@@ -7,6 +7,7 @@ import Signup from "./signup";
 import Home from "./Home";
 import Profile from "./Profile";
 import styles from "./page.module.css";
+import AccessibilityToolbar from "./AccessibilityToolbar";
 
 let socket;
 
@@ -107,6 +108,7 @@ export default function Page() {
   if (!currentUser) {
     return (
       <div className={styles.container}>
+        <AccessibilityToolbar />
         <div className={styles.tabs}>
           <button
             className={`${styles.tab} ${
@@ -142,6 +144,7 @@ export default function Page() {
 
   return (
     <div className={styles.container}>
+      <AccessibilityToolbar />
       <div className={styles.tabsContainer}>
         {tabs.map((tab, index) => (
           <div

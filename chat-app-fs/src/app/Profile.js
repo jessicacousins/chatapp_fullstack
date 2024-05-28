@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./useAuth";
 import styles from "./page.module.css";
+import AccessibilityToolbar from "./AccessibilityToolbar";
 
 const Profile = ({ onBackToHome }) => {
   const { currentUser } = useAuth();
@@ -75,6 +76,7 @@ const Profile = ({ onBackToHome }) => {
 
   return (
     <div className={styles.profileContainer}>
+      <AccessibilityToolbar />
       <h1 className={styles.profileHeader}>Your Profile</h1>
       <form className={styles.profileForm} onSubmit={handleSubmit}>
         <div className={styles.profileField}>
