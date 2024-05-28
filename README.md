@@ -6,6 +6,7 @@
 - Socket.io for the chatrooms
 - Firebase Email Authentication for Sign Up and Login
 - Firebase 3rd party Google and Apple
+- Accessibility Toolbar added with features including increase text, decrease text, gray scale, and high contrast throughout the site.
 
 ### Backend
 
