@@ -7,7 +7,7 @@ import Profile from "./Profile";
 import AccessibilityToolbar from "./AccessibilityToolbar";
 
 const Home = ({ onJoinRoom }) => {
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [username, setUsername] = useState("");
   const [chatroom, setChatroom] = useState("");
   const [chatrooms, setChatrooms] = useState([
@@ -101,6 +101,9 @@ const Home = ({ onJoinRoom }) => {
         </button>
         <button className={styles.button} onClick={() => setView("profile")}>
           Edit Profile
+        </button>
+        <button className={styles.button} onClick={logout}>
+          Logout
         </button>
 
         <ul className={styles.chatList}>
