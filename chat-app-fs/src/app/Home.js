@@ -5,6 +5,7 @@ import { useAuth } from "./useAuth";
 import styles from "./page.module.css";
 import Profile from "./Profile";
 import AccessibilityToolbar from "./AccessibilityToolbar";
+import DirectMessages from "./DirectMessages";
 
 const Home = ({ onJoinRoom }) => {
   const { currentUser, logout } = useAuth();
@@ -115,6 +116,7 @@ const Home = ({ onJoinRoom }) => {
           ))}
         </ul>
       </div>
+      <DirectMessages />
     </div>
   );
 };

@@ -127,6 +127,26 @@ app.get("/user-profile/:email", async (req, res) => {
   }
 });
 
+app.get("/direct-messages/:sender/:receiver", async (req, res) => {
+  const { sender, receiver } = req.params;
+  try {
+    const directMessagesCollection = db.collection("directMessages");
+    const messages = await directMessagesCollection
+      .find({
+        $or: [
+          { sender, receiver },
+          { sender: receiver, receiver: sender },
+        ],
+      })
+      .sort({ timestamp: 1 })
+      .toArray();
+    res.json(messages);
+  } catch (error) {
+    console.error("Failed to fetch direct messages", error);
+    res.status(500).send("Failed to fetch direct messages");
+  }
+});
+
 io.on("connection", (socket) => {
   console.log(`User ${socket.id} connected`);
 
@@ -168,6 +188,28 @@ io.on("connection", (socket) => {
     const user = getUser(socket.id);
     if (user) {
       io.to(room).emit("message", { name, text: message, color: user.color });
+    }
+  });
+
+  socket.on("sendDirectMessage", async ({ sender, receiver, message }) => {
+    try {
+      const usersCollection = db.collection("users");
+      const receiverUser = await usersCollection.findOne({ email: receiver });
+      if (receiverUser) {
+        io.to(receiverUser.socketId).emit("directMessage", {
+          sender,
+          message,
+        });
+        const directMessagesCollection = db.collection("directMessages");
+        await directMessagesCollection.insertOne({
+          sender,
+          receiver,
+          message,
+          timestamp: new Date(),
+        });
+      }
+    } catch (error) {
+      console.error("Failed to send direct message", error);
     }
   });
 
